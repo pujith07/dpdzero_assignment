@@ -1,0 +1,190 @@
+
+## Project Overview:
+
+The project is developed using the Django web framework and the Django REST framework. It provides a RESTful API to manage user data and store key-value pairs securely in the database. The API uses token-based authentication to ensure secure access to protected endpoints.
+
+
+## Instructions to Run the Code:
+
+## To run the API code locally:
+
+1. clone the repository 
+1. Install python 3.9.12 or latest version 
+2. Run pip install virtualenv command and create a virtual environment by using below syntax 
+------> virtualenv virtualenvironment name (for eg:- virtualenv  Api)
+                  [or]
+-----> python -m venv virtualenvironmentname
+
+3. Immediately after creating virtualenv one brand new system will be created.
+4.Brand new system which is created will be having the following files 
+•	Lib
+•	Scripts
+•	Environment configurations
+•	Git
+
+5. Go to virtualenvironment by using ------>cd virtualenvname (for eg:-Api)
+
+6. Activate virutalenviroment by using below commands
+--> cd scripts 
+-->activate
+
+7. Then install django inside virtualenv (Because Django software version should not be affecting entire system )
+--> pip install django 
+
+8. After installing Django immediately install Django_rest_framework & rest_framework.authtoken
+
+-->pip install Django_rest_framework (v3.14.0 or latest version)
+-->pip install rest_framework.authtoken
+
+9. Verify the installed Django and Django_rest_framework by using pip freeze command
+
+10. Go to project dpdzero_assignment
+
+11. Apply database migrations using ----->python manage.py migrate.
+
+12. Create a superuser (optional): python manage.py createsuperuser
+
+13. Start the development server with ----->python manage.py runserver.
+
+14. The API will be available at ---->[http://127.0.0.1:8000/.]
+
+## Database Schema:
+
+The database schema consists of two models:
+
+1. User_Data Model:
+
+id (AutoField): Primary key for the user data.
+username (CharField): The username of the user.
+email (EmailField): The email address of the user.
+password (CharField): The hashed password of the user.
+full_name (CharField): The full name of the user.
+
+
+2. Stored_data Model:
+
+id (AutoField): Primary key for the stored data.
+key (CharField): The key associated with the stored data.
+value (CharField): The value of the stored data.
+
+## Instructions to Test the API:
+
+Use Postman or any HTTP client to test the API endpoints. For authenticated endpoints, include the access token in the Authorization header with the value Token <access_token>.
+
+## Endpoints
+1. User Registration
+
+>Endpoint: /api/register/
+>Method: POST
+>Description: Register a new user by providing username, email, password, and full name.
+
+2. Generate Access Token
+
+>Endpoint: /api/token/
+>Method: POST
+>Description: Generate an access token for authentication by providing username and password.
+
+3. Store Data
+
+>Endpoint: /api/store/
+>Method: POST
+>Description: Store data in the database by providing a key-value pair.
+
+4. Retrieve, Update, and Delete Data
+
+>Endpoint: /api/data/<key>/
+>Methods: GET, PUT, DELETE
+>Description: Retrieve, update, or delete data using a specific key.
+
+
+## Key Components:
+
+1. User Registration Endpoint [(/api/register/)]:
+
+This endpoint allows users to register by providing their username, email, password, and full name. When a user sends a POST request to this endpoint with valid data, the API creates a new user account using the provided information and stores it in the database. The user's password is securely hashed before storing.
+
+2. Token Generation Endpoint [(/api/token/)]:
+
+This endpoint is responsible for generating an access token for an authenticated user. When a user sends a POST request with their username and password, the API authenticates the user using Django's built-in authentication mechanism. If the provided credentials are correct, the API generates a new access token associated with the user. The token is returned to the user in the response, and it can be used for subsequent authenticated requests.
+
+3. Data Storage Endpoint [(/api/store/)]:
+
+Authenticated users can use this endpoint to securely store data in the database. The user must include their access token in the request headers ('Authorization' header with 'Token <access_token>'). Users provide a key-value pair in the request body, where the key acts as an identifier for the data, and the value is the data to be stored. The API saves the key-value pair in the Stored_data model.
+
+4. Data Retrieval, Update, and Deletion [(/api/data/<key>/)]:
+
+This endpoint allows authenticated users to retrieve, update, and delete stored data using a specific key. To retrieve data, users send a GET request to the endpoint with the key in the URL. The API searches the Stored_data model for the corresponding key and returns the associated value. To update data, users send a PUT request with the key and the new value in the request body. The API updates the value associated with the key. To delete data, users send a DELETE request with the key. The API finds the data with the given key and deletes it from the database.
+
+
+## Project Creation
+
+1. Run below command inside the virtualenv (api) in command prompt 
+
+-->django-admin startproject  projectname (for eg:dpdzero_assignment)
+
+## Below files will get created under under the name of projectname  
+
+1. Project_name (folder) : it is responsible for integrating the applications	
+
+	## project folder information
+
+    •	1.__init__.py: It is blank python file which is used for making or converting folder with collection of modules into package.
+    •	2. asgi.py : (asynchoronous server gateway interface) –it is used for creating standard interface between project, framework and webservers.
+    •	4. wsgi.py : (web server gateway interface)—it is used for hosting our application or software into web
+    •	5. settings.py : It is a file where we will be making all the changes with respect to your project, application, database, static files, and templates etc.
+    •	6. urls.py : it is responsible for performing the process for url mapping 
+
+2. Manage.py : It managerial file which is responsible for controlling and triggering of the server
+
+## Steps for application creation
+Run the below command inside project folder
+--->python manage.py startapp applicationname (for eg:- api)
+
+open the project folders in editer 
+
+## files details
+    1.__init__.py : It is blank file which is responsible for representing a folder as a package
+    2. apps.py : It is a file where we will be doing all the applications related configurations
+    3. models.py : It is a file where we create our models (tables)
+    4. admin.py : it is file which is responsible for registering of created models 
+    5. views.py : It is a file where we write functions or classes which are responsible for responding for received request
+    6. tests.py : It is a file where we can write our test cases
+    7. serializers.py :It is responsible for converting python objects into json objects 
+
+
+## Procedure to connect app to project and create urls and views:-
+1. create project 
+2. create application 
+3. procedure to register app with project 
+    * go to settings of project then scrolldown until u find installed_apps variable 
+    * now register ur app by specifying the name as a element of the list 
+
+
+## Procedure to create views 
+>>>There are two types of views 
+    1.Function based views 
+    2.Class based views
+    
+* go to views.py file of application 
+* create a function which is accepting request as first argument
+* Inorder to respond a string we need HttpResponse function
+* so import HttpResponse from django.http
+* Sample example of view:-
+
+    def function_name(request):
+        return HttpResponse("Hello World")
+
+## procedure to create urls
+* Go to urls.py file of project
+* we can create urls by using path function
+* sample code :-
+  path('suffix/',address of function name, name='name of url')
+
+## procedure to runserver
+* To run server use command --->python manage.py runserver
+
+
+## Conclusion:
+
+This project provides a well-designed and secure API for user registration, authentication, and data storage. By following the provided instructions, you can easily run the API locally or deploy it to a production server for real-world use. The API is built on Django and Django REST framework, ensuring robustness and scalability for various applications.
+
